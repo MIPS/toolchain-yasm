@@ -14,9 +14,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+"""Builds YASM for the NDK."""
 from __future__ import print_function
 
 import argparse
+import inspect
 import os
 import subprocess
 import sys
@@ -43,7 +45,8 @@ def get_default_host():
 class ArgParser(argparse.ArgumentParser):
     def __init__(self):
         super(ArgParser, self).__init__(
-            description='Builds GCC for Android.')
+            description=inspect.getdoc(sys.modules[__name__]),
+            formatter_class=argparse.RawDescriptionHelpFormatter)
 
         self.add_argument(
             '--host', choices=('darwin', 'linux', 'windows', 'windows64'),
