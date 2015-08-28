@@ -18,7 +18,7 @@
 # at the right location
 
 PROGDIR=$(dirname $0)
-. $PROGDIR/prebuilt-common.sh
+. $NDK_BUILDTOOLS_PATH/prebuilt-common.sh
 
 PROGRAM_PARAMETERS="<src-dir> <ndk-dir>"
 PROGRAM_DESCRIPTION=\
@@ -132,7 +132,7 @@ find $BUILD_OUT/prefix/bin -maxdepth 1 -type f -exec $STRIP {} \;
 log "Copying yasm"
 #run copy_directory "$BUILD_OUT/prefix" "$(get_prebuilt_install_prefix)"
 SUBDIR=$(get_prebuilt_host_exec yasm)
-OUT=$NDK_DIR/$SUBDIR
+OUT=$TMPDIR/$SUBDIR
 run mkdir -p $(dirname "$OUT") && cp $BUILD_OUT/prefix/bin/$(get_host_exec_name yasm) $OUT
 fail_panic "Could not copy yasm"
 
@@ -140,7 +140,7 @@ if [ "$PACKAGE_DIR" ]; then
     ARCHIVE=ndk-yasm-$HOST_TAG.tar.bz2
     dump "Packaging: $ARCHIVE"
     mkdir -p "$PACKAGE_DIR" &&
-    pack_archive "$PACKAGE_DIR/$ARCHIVE" "$NDK_DIR" "$SUBDIR"
+    pack_archive "$PACKAGE_DIR/$ARCHIVE" "$TMPDIR" "$SUBDIR"
     fail_panic "Could not package archive: $PACKAGE_DIR/$ARCHIVE"
 fi
 
