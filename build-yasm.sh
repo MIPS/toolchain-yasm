@@ -94,13 +94,8 @@ mkdir -p "$BUILD_DIR/src" && copy_directory "$SRC_DIR/yasm" "$BUILD_DIR/src"
 fail_panic "Could not copy yasm sources to: $BUILD_DIR/src"
 
 CONFIGURE_FLAGS="--disable-nls --disable-rpath --prefix=$BUILD_DIR/prefix"
-if [ "$MINGW" = "yes" ]; then
-    # Required for a proper mingw cross compile
-    CONFIGURE_FLAGS=$CONFIGURE_FLAGS" --host=i586-pc-mingw32"
-fi
-
-if [ "$DARWIN" = "yes" ]; then
-    # Required for a proper darwin cross compile
+if [ "$MINGW" = "yes" -o "$DARWIN" = "yes" ]; then
+    # Required for a proper mingw or darwin cross compile
     CONFIGURE_FLAGS=$CONFIGURE_FLAGS" --host=$ABI_CONFIGURE_HOST"
 fi
 
